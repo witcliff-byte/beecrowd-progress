@@ -1,4 +1,4 @@
-# 1011 - Esfera
+# 1001 - Extremely Basic
 # https://judge.beecrowd.com/en/problems/view/1001
 # 03/02/2026
 
