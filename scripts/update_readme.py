@@ -13,15 +13,38 @@ def list_solutions(glob_pattern):
     files = [str(fp) for fp in p.rglob('*') if fp.is_file() and fnmatch.fnmatch(str(fp), glob_pattern) and '.git/' not in str(fp)]
     return files
 
-def count_added_today(glob_pattern):
-    today = datetime.date.today().isoformat()
+def count_added_today_from_readme(path, today_str):
+    content = Path(path).read_text(encoding='utf-8')
+    lines = content.splitlines()
     try:
-        cmd = ['git', 'log', f'--since={today}T00:00:00', '--pretty=format:', '--name-only', '--diff-filter=A']
-        out = subprocess.run(cmd, capture_output=True, text=True, check=True).stdout
-        added= set(line.strip() for line in out.splitlines() if line.strip())
-        return sum(1 for f in added if fnmatch.fnmatch(f, glob_pattern))
-    except Exception:
+        start = next(i for i, l in enumerate(lines) if l.strip().startswith('## Stats Diárias'))
+    except StopIteration:
         return 0
+    header_idx = None
+    for i in range(start, min(start + 20, len(lines))):
+        if lines[i].strip().startswith('|') and 'Data' in lines[i]:
+            header_idx = i
+            break
+    if header_idx is None or header_idx + 1 >= len(lines):
+        return 0
+    sep_idx = header_idx + 1
+    row_idx = sep_idx + 1
+    rows = []
+    while row_idx < len(lines) and lines[row_idx].strip().startswith('|'):
+        rows.append(lines[row_idx])
+        row_idx += 1
+    def parse_total(row):
+        m = re.search(r'\*\*(\d+)\*\*', row)
+        if m:
+            return int(m.group(1))
+        cols = [c.strip() for c in row.strip('|').split('|')]
+        return int(cols[2]) if len(cols) >= 3 and cols[2].isdigit() else 0
+    if not rows:
+        return 0
+    today_row = rows[0] if today_str in rows[0] else None
+    prev_row = rows[1] if today_row and len(rows) > 1 else (rows[0] if not today_row else None)
+    prev_total = parse_total(prev_row) if prev_row else 0
+    return prev_total
 
 def update_readme(path, today_str, today_count, total_count):
     content = Path(path).read_text(encoding='utf-8')
@@ -70,8 +93,9 @@ def git_commit_push(path, message='chore: atualizar stats'):
 def main():
     sols = list_solutions(SOLUTION_GLOB)
     total = len(sols)
-    today_added = count_added_today(SOLUTION_GLOB)
     today_str = datetime.date.today().strftime('%d/%m/%Y')
+    prev_total = count_added_today_from_readme(README_PATH, today_str)
+    today_added = max(total - prev_total, 0)
     changed = update_readme(README_PATH, today_str, today_added, total)
     if changed:
         git_commit_push(README_PATH)
