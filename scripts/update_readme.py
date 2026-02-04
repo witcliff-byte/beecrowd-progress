@@ -6,7 +6,7 @@ import datetime
 import re
 
 README_PATH = os.getenv('README_PATH', 'README.md')
-SOLUTION_GLOB = os.getenv('SOLUTION_GLOB', '**/*.py'),
+SOLUTION_GLOB = os.getenv('SOLUTION_GLOB', '**/*.py')
 
 def list_solutions(glob_pattern):
     p = Path('.')
@@ -59,8 +59,8 @@ def update_readme(path, today_str, today_count, total_count):
 
 def git_commit_push(path, message='chore: atualizar stats'):
     try:
-        subprocess.run(['git', 'config', 'user.name', 'github-actions[bot]@users.noreply.github.com']
-                       , check=True)
+        subprocess.run(['git', 'config', 'user.name', 'github-actions[bot]'], check=True)
+        subprocess.run(['git', 'config', 'user.email', 'github-actions[bot]@users.noreply.github.com'], check=True)
         subprocess.run(['git', 'add', path], check=True)
         subprocess.run(['git', 'commit', '-m', message], check=True)
         subprocess.run(['git', 'push'], check=True)
