@@ -34,11 +34,14 @@ def count_added_today_from_readme(path, today_str):
         rows.append(lines[row_idx])
         row_idx += 1
     def parse_total(row):
-        m = re.search(r'\*\*(\d+)\*\*', row)
-        if m:
-            return int(m.group(1))
         cols = [c.strip() for c in row.strip('|').split('|')]
-        return int(cols[2]) if len(cols) >= 3 and cols[2].isdigit() else 0
+        if len(cols) >= 3:
+            total_str = cols[2].replace('**', '').strip()
+            try:
+                return int(total_str)
+            except ValueError:
+                return 0
+        return 0
     if not rows:
         return 0
     today_row = rows[0] if today_str in rows[0] else None
