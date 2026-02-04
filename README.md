@@ -7,19 +7,23 @@ Acompanho meu avanço resolvendo desafios da Beecrowd (URI) em Python.
 
 **Perfil**: [1210688](https://www.beecrowd.com.br/judge/pt/profile/1210688)
 
+
 ## Sumário
 - [Progresso](#progresso)
 - [Objetivos](#objetivos)
 - [Como rodar](#como-rodar)
 - [Automação](#automação)
 
+## Stats Diárias
+| Data        | Hoje | Total | Rank     |
+|-------------|------|-------|----------|
+| 04/02/2026 | 16 | **16**| **#352499** |
+| 02/02/2026 | 11   | **11**| **#352499**|
+
+
 ## Progresso
 - Hoje: 11 resolvidos · Total: 11 · Rank: #352499
 
-## Stats Diárias
-| Data      | Hoje | Total | Rank |
-|-----------|------|-------|------|
-| 02/02/2026 | 11 | **11** | **#352499** |
 
 ## Objetivos
 - [ ] Completar a categoria Beginner
