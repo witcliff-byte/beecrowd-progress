@@ -9,7 +9,6 @@ Acompanho meu avanço resolvendo desafios da Beecrowd (URI) em Python.
 
 
 ## Sumário
-- [Progresso](#progresso)
 - [Objetivos](#objetivos)
 - [Como rodar](#como-rodar)
 - [Automação](#automação)
@@ -19,11 +18,6 @@ Acompanho meu avanço resolvendo desafios da Beecrowd (URI) em Python.
 |-------------|------|-------|----------|
 | 04/02/2026 | 17 | **17**| **#352499** |
 | 02/02/2026 | 11   | **11**| **#352499**|
-
-
-## Progresso
-- Hoje: 11 resolvidos · Total: 11 · Rank: #352499
-
 
 ## Objetivos
 - [ ] Completar a categoria Beginner
