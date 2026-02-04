@@ -24,4 +24,4 @@ jobs:
         env:
           SOLUTION_GLOB: 'beginner/*.py'
           README_PATH: 'README.md'
-        run: python scripts/update_stats.py
+        run: python scripts/update_readme.py
